@@ -1,20 +1,26 @@
 #配置端口号
 server:
-  port: 8000
+  port: 8088
 
 #管理数据源
 spring:
   datasource:
     #高版本驱动使用
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://121.5.62.244:3306/xiaojianshan?serverTimezone=GMT%2B8&useUnicode=true&characterEncoding=utf8&autoReconnect=true&allowMultiQueries=true
-    #设定用户名和密码
+    url: jdbc:mysql://206.119.178.35:3306/usermanager?serverTimezone=GMT%2B8&useUnicode=true&characterEncoding=utf8&autoReconnect=true&allowMultiQueries=true
+    #设定用户名和密码 121.5.62.244 密码Wsp88153@
+    #139.196.48.242 administrator Wm8000000@
     username: root
-    password: Wsp88153@
-
-
-
-#SpringBoot整合Mybatis-plus
+    password: mysql123123 #本地密码 password  root#123456
+  servlet:
+    multipart:
+      enabled: true
+      max-file-size: 15MB
+      max-request-size: 15MB
+#D:\project\vue\dist\static\img\
+SavePath:
+  ProfilePhoto: '/localImage'    #图片存储路径 服务器路劲 D:\project\  本地：E:\dev\suruifeng\vue-yszp-erp\dist\static\img\
+  ProfilePhotoMapper: 'http://206.119.178.35:22/opt/dev'
 mybatis-plus:
   #指定别名包
   type-aliases-package: com.xjs.pojo
@@ -29,5 +35,4 @@ mybatis-plus:
 logging:
   level:
     com.xjs.mapper: debug
-
 

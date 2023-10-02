@@ -1,0 +1,331 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+
+<mapper namespace="com.xjs.mapper.userPayMapper" >
+    <!--用户信息管理-->
+    <select id="loginCheck" parameterType="string" resultType="Integer">
+    select count(1) from personal_info where  phone=#{phone}
+    </select>
+
+    <select id="selectLogin" parameterType="com.xjs.pojo.userPay" resultType="com.xjs.pojo.userPay">
+        select * from personal_info where
+        <if test="phone !=null and phone !=''">
+            phone = #{phone}
+         </if>
+        <if test="password !=null and password !=''">
+            and password = #{password}
+        </if>
+    </select>
+
+    <select id="login" parameterType="string" resultType="com.xjs.pojo.userPay">
+        select * from personal_info where  1=1
+
+        <if test="id !=null and id !=''">
+            and id = #{id}
+        </if>
+        <if test="name !=null and name !=''">
+            and name = #{name}
+        </if>
+        <if test="phone !=null and phone !=''">
+            and phone = #{phone}
+        </if>
+        <if test="idNumber !=null and idNumber !=''">
+            and id_number = #{idNumber}
+        </if>
+        <if test="identity !=null and identity !=''">
+            and identity = #{identity}
+        </if>
+
+    </select>
+
+    <insert id="addUserPay" parameterType="com.xjs.pojo.userPay">
+
+            INSERT INTO personal_info(id
+
+        <if test="name!=null and name !=''">
+            ,name
+        </if>
+        <if test="phone != null and phone != ''">
+            ,phone
+        </if>
+        <if test="idNumber != null and idNumber != ''">
+            ,id_number
+        </if>
+        <if test="identity != null and identity != ''">
+            ,identity
+        </if>
+        <if test="remark != null and remark != ''">
+            ,remark
+        </if>
+        <if test="imgId != null and imgId != ''">
+            ,img_id
+        </if>
+        <if test="imgUrl != null and imgUrl != ''">
+            ,img_url
+        </if>
+        <if test="password != null and password != ''">
+            ,password
+        </if>
+        ) VALUES (#{id}
+        <if test="name!=null and name !=''">
+            ,#{name}
+        </if>
+
+        <if test="phone != null and phone != ''">
+            ,#{phone}
+        </if>
+        <if test="idNumber != null and idNumber != ''">
+            ,#{idNumber}
+        </if>
+        <if test="identity != null and identity != ''">
+            ,#{identity}
+        </if>
+        <if test="remark != null and remark != ''">
+            ,#{remark}
+        </if>
+        <if test="imgId != null and imgId != ''">
+            ,#{imgId}
+        </if>
+        <if test="imgUrl != null and imgUrl != ''">
+            ,#{imgUrl}
+        </if>
+        <if test="password != null and password != ''">
+            ,#{password}
+        </if>
+        )
+    </insert>
+
+    <delete id="deleteUserById" parameterType="String">
+        DELETE   from  personal_info where id=#{id}
+    </delete>
+
+    <update id="updateUserPay" parameterType="com.xjs.pojo.userPay">
+        UPDATE personal_info
+        <set>
+            <if test="name != null">
+                name = #{name},
+            </if>
+            <if test="phone != null and phone != ''">
+                phone= #{phone},
+            </if>
+            <if test="identity != null and identity != ''">
+                identity= #{identity},
+            </if>
+            <if test="remark != null and remark != ''">
+                remark= #{remark},
+            </if>
+            <if test="idNumber != null and idNumber != ''">
+                id_number= #{idNumber},
+            </if>
+            <if test="imgId != null and imgId != ''">
+                img_id=#{imgId},
+            </if>
+            <if test="imgUrl != null and imgUrl != ''">
+                img_url=#{imgUrl}
+            </if>
+        </set>
+        WHERE id = #{id}
+    </update>
+
+    <!--魔板信息管理-->
+    <select id="selectTemplateByPhone" parameterType="string" resultType="com.xjs.pojo.Template">
+        select * from template where  phone=#{phone}
+    </select>
+    <select id="selectTemplateById" parameterType="string" resultType="com.xjs.pojo.Template">
+       SELECT
+        a.*,
+        b.fieldName AS frontUrl,
+        c.fieldName AS naUrl
+       FROM
+        template a
+        LEFT JOIN idfrontimg b ON a.id = b.templateId
+        LEFT JOIN idnationalimg c ON a.id = c.templateId where  a.id=#{Id}
+    </select>
+
+    <insert id="addTemplate" parameterType="com.xjs.pojo.Template">
+
+        INSERT INTO template(id
+        <if test="templateName!=null and templateName !=''">
+            ,template_name
+        </if>
+        <if test="phoneNumber != null and phoneNumber != ''">
+            ,phone_number
+        </if>
+
+        <if test="type != null and type != ''">
+            ,type
+        </if>
+
+        <if test="templateTitle != null and templateTitle != ''">
+            ,templateTitle
+        </if>
+        <if test="createTime != null">
+            ,createTime
+        </if>
+        <if test="isFreeze != null and isFreeze != ''">
+            ,isFreeze
+        </if>
+        <if test="lookedPeople != null and lookedPeople != ''">
+            ,lookedPeople
+        </if>
+        <if test="name != null and name != ''">
+            ,name
+        </if>
+        <if test="formData != null and formData != ''">
+            ,formData
+        </if>
+        )
+        VALUES (#{id}
+        <if test="templateName!=null and templateName !=''">
+            ,#{templateName}
+        </if>
+        <if test="phoneNumber != null and phoneNumber != ''">
+            ,#{phoneNumber}
+        </if>
+
+        <if test="type != null and type != ''">
+            ,#{type}
+        </if>
+
+        <if test="templateTitle != null and templateTitle != ''">
+            ,#{templateTitle}
+        </if>
+        <if test="createTime != null">
+            ,#{createTime}
+        </if>
+        <if test="isFreeze != null and isFreeze != ''">
+            ,,#{isFreeze}
+        </if>
+        <if test="lookedPeople != null and lookedPeople != ''">
+            ,#{lookedPeople}
+        </if>
+        <if test="name != null and name != ''">
+            ,#{name}
+        </if>
+        <if test="formData != null and formData != ''">
+            ,#{formData}
+        </if>
+        )
+    </insert>
+
+    <delete id="deleteTemplateById" parameterType="String">
+        DELETE   from  template where id=#{id}
+    </delete>
+
+    <delete id="batchDeleteTemplateById" parameterType="String">
+    delete from template where id in
+    <foreach collection="list" item="id" open="(" separator="," close=")">
+        #{id}
+    </foreach>
+    </delete>
+    <update id="updateTemplateById" parameterType="com.xjs.pojo.Template">
+        UPDATE template
+        <set>
+            <if test="name != null">
+                name = #{name},
+            </if>
+            <if test="templateName!=null and templateName !=''">
+                template_name=#{templateName},
+            </if>
+            <if test="phone != null and phone != ''">
+                phone=#{phone},
+            </if>
+            <if test="content != null and content != ''">
+                content=#{content},
+            </if>
+            <if test="status != null and status != ''">
+                status=#{status},
+            </if>
+            <if test="remark != null and remark != ''">
+                remark=#{remark}
+            </if>
+        </set>
+        WHERE id = #{id}
+    </update>
+
+
+    <insert id="addIdNationalImg" parameterType="com.xjs.pojo.IDNationalImg">
+
+        INSERT INTO idnationalimg(
+        <if test="id != null and id != ''">
+            id ,
+        </if>
+
+        <if test="fieldName != null and fieldName != ''">
+            fieldName ,
+        </if>
+        <if test="file != null and file != ''">
+            file,
+        </if>
+        <if test="createTime != null ">
+            createTime,
+        </if>
+        <if test="templateId != null and templateId != ''">
+            templateId
+        </if>
+
+        )
+        VALUES (
+        <if test="id != null and id != ''">
+            #{id},
+        </if>
+
+        <if test="fieldName != null and fieldName != ''">
+            #{fieldName},
+        </if>
+        <if test="file != null and file != ''">
+            #{file},
+        </if>
+        <if test="createTime != null">
+            #{createTime},
+        </if>
+        <if test="templateId != null and templateId != ''">
+            #{templateId}
+        </if>
+        )
+    </insert>
+
+    <insert id="addIdFrontImg" parameterType="com.xjs.pojo.IDFrontImg">
+
+        INSERT INTO idfrontimg(
+        <if test="id != null and id != ''">
+            id,
+        </if>
+        <if test="fieldName != null and fieldName != ''">
+            fieldName ,
+        </if>
+        <if test="file != null and file != ''">
+            file,
+        </if>
+        <if test="createTime != null">
+            createTime,
+        </if>
+        <if test="templateId != null and templateId != ''">
+            templateId
+        </if>
+
+        )
+        VALUES (
+        <if test="id != null and id != ''">
+            #{id},
+        </if>
+
+        <if test="fieldName != null and fieldName != ''">
+            #{fieldName},
+        </if>
+        <if test="file != null and file != ''">
+            #{file},
+        </if>
+        <if test="createTime != null ">
+            #{createTime},
+        </if>
+        <if test="templateId != null and templateId != ''">
+            #{templateId}
+        </if>
+        )
+    </insert>
+</mapper>

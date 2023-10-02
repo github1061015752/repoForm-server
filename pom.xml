@@ -4,6 +4,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.xjs</groupId>
     <artifactId>xjs</artifactId>
+    <packaging>jar</packaging>
     <version>0.0.1-SNAPSHOT</version>
     <name>xjs</name>
     <description>xjs</description>
@@ -42,6 +43,10 @@
             <version>3.4.3</version>
         </dependency>
 
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-cache</artifactId>
+        </dependency>
         <!--jdbc依赖包-->
         <dependency>
             <groupId>mysql</groupId>
@@ -54,6 +59,55 @@
             <artifactId>lombok</artifactId>
         </dependency>
 
+        <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>fastjson</artifactId>
+            <version>2.0.31</version>
+            <!--<systemPath>src/lib/fastjson-2.0.31.jar</systemPath>-->
+        </dependency>
+        <dependency>
+            <groupId>com.apistd.uni</groupId>
+            <artifactId>uni-sdk</artifactId>
+            <version>0.0.4</version>
+        </dependency>
+        <dependency>
+            <groupId>com.konghq</groupId>
+            <artifactId>unirest-java</artifactId>
+            <version>3.13.0</version>
+        </dependency>
+        <dependency>
+            <groupId>commons-fileupload</groupId>
+            <artifactId>commons-fileupload</artifactId>
+            <version>1.4</version>
+        </dependency>
+        <!--<dependency>-->
+            <!--<groupId>commons-io</groupId>-->
+            <!--<artifactId>commons-io</artifactId>-->
+        <!--</dependency>-->
+        <!--Excel>-->
+        <!-- 导入和导出-->
+        <dependency>
+            <groupId>cn.afterturn</groupId>
+            <artifactId>easypoi-base</artifactId>
+            <version>3.0.3</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-test</artifactId>
+            <version>RELEASE</version>
+        </dependency>
+        <!--<dependency>-->
+            <!--<groupId>maven.mvn.org.apache</groupId>-->
+            <!--<artifactId>apache</artifactId>-->
+            <!--<version>9</version>-->
+        <!--</dependency>-->
+
+
+        <!--<dependency>-->
+            <!--<groupId>org.springframework.boot</groupId>-->
+            <!--<artifactId>spring-boot-dependencies</artifactId>-->
+            <!--<version>2.3.7.RELEASE</version>-->
+        <!--</dependency>-->
 
     </dependencies>
 

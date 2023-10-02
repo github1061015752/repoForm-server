@@ -20,7 +20,10 @@ public class SysResult implements Serializable {
 
         return new SysResult(201,"业务调用失败!!",null);
     }
+    public static SysResult failMsg(String msg){
 
+        return new SysResult(203,msg,null);
+    }
     public static SysResult success(){
 
         return new SysResult(200,"业务调用成功!!",null);
@@ -35,5 +38,9 @@ public class SysResult implements Serializable {
     public static SysResult success(String msg,Object data){
 
         return new SysResult(200,msg,data);
+    }
+    public static <T> T cast(Object o, Class<T> type) {
+        if (type.isInstance(o)) return type.cast(o);
+        throw new RuntimeException("can not cast " + o.getClass() + " to '" + type);
     }
 }

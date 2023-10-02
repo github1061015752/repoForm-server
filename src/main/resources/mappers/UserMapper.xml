@@ -6,24 +6,365 @@
 
 
 <mapper namespace="com.xjs.mapper.UserMapper" >
-<!--    <select id="findUserByUP" resultType="com.xjs.pojo.User">-->
-<!--        select * from xjs_user-->
-<!--            where username=#{username}-->
-<!--            and   password=#{password}-->
-<!--    </select>-->
+    <!--用户信息管理-->
 
-    <select id="findUserByUP" parameterType="User" resultType="User">
-        select * from xjs_user
-        where username=#{username}
-          and login_name=#{loginName}
-          and   password=#{password}
+    <select id="login" parameterType="String" resultType="com.xjs.pojo.VeteranUser">
+        select * from veteran_user where  login_name=#{loginName} and password=#{password}
     </select>
 
+    <select id="findVeteranUserById" parameterType="String" resultType="com.xjs.pojo.VeteranUser">
+        select * from veteran_user
+        where id=#{id}
+    </select>
+    <insert id="addVeteranUser" parameterType="com.xjs.pojo.VeteranUser">
 
-    <insert id="addUser" parameterType="com.xjs.pojo.User">
-        insert into xjs_user (id,create_time,modify_time,`create`,modify,username,mobile,login_name,password,email,nickname,roleId,status)
-        values(#{id},#{createTime},#{modifyTime},#{create},#{modify},#{username},#{mobile},#{loginName},#{password},#{email},#{nickname},#{roleId},#{status})
+            INSERT INTO veteran_user(id
+        <if test="name!=null and name !=''">
+            ,name
+        </if>
+            <if test="loginName != null and loginName != ''">
+                ,login_name
+            </if>
+        <if test="password != null and password != ''">
+            ,password
+        </if>
+        <if test="sex != null and sex != ''">
+            ,sex
+        </if>
+        <if test="age != null and age != ''">
+            ,age
+        </if>
+        <if test="nation != null and nation != ''">
+            ,nation
+        </if>
+        <if test="cname != null and cname != ''">
+            ,cname
+        </if>
+        <if test="imgId != null and imgId != ''">
+            ,img_id
+        </if>
+        <if test="unit != null and unit != ''">
+            ,unit
+        </if>
+        <if test="ntivePlace != null and ntivePlace != ''">
+            ,ntive_place
+        </if>
+        <if test="arms != null and arms != ''">
+            ,arms
+        </if>
+        <if test="phone != null and phone != ''">
+            ,phone
+        </if>
+        <if test="enlistmentAge != null and enlistmentAge != ''">
+            ,enlistment_age
+        </if>
+        <if test="enlistmentTime != null">
+            ,enlistment_time
+        </if>
+        <if test="birthday != null">
+            ,birthday
+        </if>
+        <if test="dataProvider != null and dataProvider != ''">
+            ,data_provider
+        </if>
+
+        <if test="remark != null and remark != ''">
+            ,remark
+        </if>
+        <if test="status != null and status != ''">
+            ,status
+        </if>
+        <if test="createTime != null ">
+            ,create_time
+        </if>
+        <if test="modifyTime != null ">
+            ,update_time
+        </if>
+        <if test="create != null and create != ''">
+            ,creator
+        </if>
+        <if test="modify != null and modify != ''">
+            ,updator
+        </if>
+        )
+            VALUES (#{id}
+        <if test="name!=null and name !=''">
+            ,#{name}
+        </if>
+        <if test="loginName != null and loginName != ''">
+            ,#{loginName}
+        </if>
+        <if test="password != null and password != ''">
+            ,#{password}
+        </if>
+        <if test="sex != null and sex != ''">
+            ,#{sex}
+        </if>
+        <if test="age != null and age != ''">
+            ,#{age}
+        </if>
+        <if test="nation != null and nation != ''">
+            ,#{nation}
+        </if>
+        <if test="cname != null and cname != ''">
+            ,#{cname}
+        </if>
+        <if test="imgId != null and imgId != ''">
+            ,#{imgId}
+        </if>
+        <if test="unit != null and unit != ''">
+            ,#{unit}
+        </if>
+        <if test="ntivePlace != null and ntivePlace != ''">
+            ,#{ntivePlace}
+        </if>
+        <if test="arms != null and arms != ''">
+            ,#{arms}
+        </if>
+        <if test="phone != null and phone != ''">
+            ,#{phone}
+        </if>
+        <if test="enlistmentAge != null and enlistmentAge != ''">
+            ,#{enlistmentAge}
+        </if>
+        <if test="enlistmentTime != null ">
+            ,#{enlistmentTime}
+        </if>
+        <if test="birthday != null ">
+            ,#{birthday}
+        </if>
+        <if test="dataProvider != null and dataProvider != ''">
+            ,#{dataProvider}
+        </if>
+
+        <if test="remark != null and remark != ''">
+            ,#{remark}
+        </if>
+        <if test="status != null and status != ''">
+            ,#{status}
+        </if>
+        <if test="modifyTime != null">
+            ,#{modifyTime}
+        </if>
+        <if test="createTime != null">
+            ,#{createTime}
+        </if>
+        <if test="create != null and create != ''">
+            ,#{create}
+        </if>
+        <if test="modify != null and modify != ''">
+            ,#{modify}
+        </if>
+        )
     </insert>
+
+<select id="selectAllVeteranUser" parameterType="com.xjs.pojo.VeteranUser" resultType="com.xjs.pojo.VeteranUser">
+    select * from veteran_user  where 1=1
+    <if test="name  !=null and name !='' ">
+        and name like '%${name}%'
+    </if>
+    <if test="phone  !=null and phone !='' ">
+        and phone=#{phone}
+    </if>
+    <if test="cname  !=null and cname !=''">
+        and cname=#{cname}
+    </if>
+    <if test="startTime  !=null || startTime  !=null">
+        and enlistment_time between #{startTime} and #{endTime}
+    </if>
+       and status !=3
+</select>
+    <update id="updateVeteranUser">
+        UPDATE veteran_user
+        <set>
+            <if test="name != null">
+                name = #{name},
+            </if>
+            <if test="loginName != null and loginName != ''">
+                login_name= #{loginName},
+            </if>
+            <if test="password != null and password != ''">
+                password= #{password},
+            </if>
+            <if test="sex != null and sex != ''">
+                sex= #{sex},
+            </if>
+            <if test="nation != null and nation != ''">
+                nation= #{nation},
+            </if>
+            <if test="cname != null and cname != ''">
+                cname= #{cname},
+            </if>
+            <if test="imgId != null and imgId != ''">
+                img_id= #{imgId},
+            </if>
+            <if test="unit != null and unit != ''">
+                unit= #{unit},
+            </if>
+            <if test="ntivePlace != null and ntivePlace != ''">
+                ntive_place= #{ntivePlace},
+            </if>
+            <if test="arms != null and arms != ''">
+                arms= #{arms},
+            </if>
+            <if test="phone != null and phone != ''">
+                phone= #{phone},
+            </if>
+            <if test="enlistmentAge != null and enlistmentAge != ''">
+                enlistment_age= #{enlistmentAge},
+            </if>
+            <if test="enlistmentTime != null and enlistmentTime != ''">
+                enlistment_time= #{enlistmentTime},
+            </if>
+            <if test="birthday != null and birthday != ''">
+                birthday= #{birthday},
+            </if>
+            <if test="dataProvider != null and dataProvider != ''">
+                data_provider= #{dataProvider},
+            </if>
+
+            <if test="remark != null and remark != ''">
+                remark= #{remark},
+            </if>
+            <if test="status != null and status != ''">
+                status= #{status},
+            </if>
+            <if test="createTime != null and createTime != ''">
+                create_time= #{createTime},
+            </if>
+            <if test="modifyTime != null and modifyTime != ''">
+                update_time= #{modifyTime},
+            </if>
+
+            <if test="create != null and create != ''">
+                creator= #{create}
+            </if>
+        </set>
+        WHERE id = #{id}
+    </update>
+    <delete id="deleteUserById" parameterType="String">
+        DELETE   from  veteran_user where id=#{id}
+    </delete>
+
+
+    <!--照片管理-->
+
+
+    <select id="findVeteranImgById" parameterType="com.xjs.pojo.VeteranImg" resultType="com.xjs.pojo.VeteranImg">
+        select * from veteran_img
+        where id=#{id}
+    </select>
+    <insert id="addVeteranImg" parameterType="com.xjs.pojo.VeteranImg">
+
+        INSERT INTO veteran_img(id, userId,imgUrl
+        <if test="imgName != null and imgName != ''">
+            img_name ,
+        </if>
+        <if test="imgDetail != null and imgDetail != ''">
+            img_detail,
+        </if>
+        <if test="uploadTime != null and uploadTime != ''">
+            upload_time,
+        </if>
+        <if test="remark != null and remark != ''">
+            remark,
+        </if>
+        <if test="status != null and status != ''">
+            status,
+        </if>
+        <if test="modifyTime != null and modifyTime != ''">
+            update_time,
+        </if>
+        <if test="create != null and create != ''">
+            creator,
+        </if>
+        <if test="modify != null and modify != ''">
+            updator
+        </if>
+        )
+        VALUES (#{id},#{user_id}, #{img_url},
+
+        <if test="imgName != null and imgName != ''">
+            #{imgName},
+        </if>
+
+        <if test="imgDetail != null and imgDetail != ''">
+            #{imgDetail},
+        </if>
+        <if test="uploadTime != null">
+            #{uploadTime},
+        </if>
+        <if test="remark != null and remark != ''">
+            #{remark},
+        </if>
+        <if test="status != null and status != ''">
+            #{status},
+        </if>
+        <if test="modifyTime != null and modifyTime != ''">
+            #{modifyTime},
+        </if>
+        <if test="create != null and create != ''">
+            #{create},
+        </if>
+        <if test="modify != null and modify != ''">
+            #{modify}
+        </if>
+        )
+    </insert>
+
+    <select id="selectAllVeteranImg" parameterType="com.xjs.pojo.VeteranImg" resultType="com.xjs.pojo.VeteranImg">
+        select * from veteran_img  where 1=1
+        <if test="userId  !=null and userId !='' ">
+            and user_id=${userId}
+        </if>
+        <if test="imgName != null and imgName != ''">
+            img_name ,
+        </if>
+        <if test="startTime  !=null || startTime  !=null">
+            and uploadTime between #{startTime} and #{endTime}
+        </if>
+
+    </select>
+
+    <update id="updateVeteranImg">
+        UPDATE veteran_img
+        <set>
+            <if test="imgName != null and imgName != ''">
+                img_name=#{imgName},
+            </if>
+
+            <if test="imgDetail != null and imgDetail != ''">
+                img_detail= #{imgDetail},
+            </if>
+            <if test="uploadTime != null">
+                upload_time=#{uploadTime},
+            </if>
+            <if test="remark != null and remark != ''">
+                remark=  #{remark},
+            </if>
+            <if test="status != null and status != ''">
+                status= #{status},
+            </if>
+            <if test="modifyTime != null and modifyTime != ''">
+                update_time= #{modifyTime},
+            </if>
+            <if test="create != null and create != ''">
+                creator= #{create},
+            </if>
+            <if test="modify != null and modify != ''">
+                updator =#{modify}
+            </if>
+        </set>
+        WHERE id = #{id}
+    </update>
+
+    <delete id="deleteVeteranImgById" parameterType="Integer">
+        DELETE   from  veteran_img where id=#{id}
+    </delete>
+
+    <select id="deleteVeteranImgByUserId" parameterType="Integer" resultType="com.xjs.pojo.VeteranImg">
+        SELECT  * from  veteran_img where user_id=#{userId}
+    </select>
 
 
 

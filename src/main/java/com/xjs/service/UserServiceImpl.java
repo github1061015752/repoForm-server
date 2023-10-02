@@ -1,13 +1,18 @@
 package com.xjs.service;
 
 import com.xjs.mapper.UserMapper;
-import com.xjs.pojo.User;
+import com.xjs.pojo.VeteranImg;
+import com.xjs.pojo.VeteranUser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-import org.springframework.util.DigestUtils;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
+import java.util.Locale;
+import java.util.UUID;
+import java.util.logging.SimpleFormatter;
+
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -24,51 +29,100 @@ public class UserServiceImpl implements UserService {
      *        查到了: 用户名和密码正确  返回token密钥
      *        没查到: 用户名和密码错误  返回null
      *
-     * @param user
+     * @param loginName password
      * @return
      */
     @Override
-    public User login(User user) {
+    public VeteranUser login(String loginName ,String password) {
         //1.将密码加密处理
 //        String password = user.getPassword();
 //        String md5Pass = DigestUtils.md5DigestAsHex(password.getBytes());
 //        user.setPassword(md5Pass);
         //2.根据用户名和密码查询数据库
-        User userDB = userMapper.findUserByUP(user);
-        if(userDB == null){
-            //用户名或者密码错误
-            return null;
-        }else {
+        VeteranUser userDB = userMapper.login(loginName,password);
             return userDB;
-        }
       /*  //密钥:该密钥是用户登录的唯一的标识符,特点:独一无二
         String token = UUID.randomUUID().toString()
                         .replace("-", "");*/
 
     }
 
-
+    @Override
+    public VeteranUser findVeteranUserById(String id) {
+        return userMapper.findVeteranUserById(id);
+    }
 
     @Override
-    @Transactional
-    public void addUser(User user) {
-        Date date = new Date(); //获取当前时间
-        String md5Pass =
-                DigestUtils.md5DigestAsHex(user.getPassword().getBytes());
-        user
-                .setId(1)
-                .setUsername("wanghongfu")
-                .setMobile("123456")
-                .setLoginName("whf")
-                .setPassword(md5Pass)
-                .setStatus("Y")
-                .setEmail("1983796868@qq.com")
-                .setLoginName("whf")
-                .setRoleId(11)
-                .setStatus("Y")
-                .setCreate("王洪福")
-                .setCreateTime(date);
-        userMapper.addUser(user);
+    public int addVeteranUser(VeteranUser veteranUser) {
+        veteranUser.setStatus(1);
+        veteranUser.setCreateTime(new Date());
+        veteranUser.setId(UUID.randomUUID().toString());
+        return userMapper.addVeteranUser(veteranUser);
     }
+
+    @Override
+    public List<VeteranUser> selectAllVeteranUser(VeteranUser veteranUser) {
+        List<VeteranUser> ListUser=userMapper.selectAllVeteranUser(veteranUser);
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
+
+        for (VeteranUser list :ListUser) {
+            if(!list.getBirthday().toString().isEmpty()){
+                list.setBirthdays(simpleDateFormat.format(list.getBirthday()).toString());
+            }
+            if(!list.getCreateTime().toString().isEmpty()){
+                list.setCreateTimes(simpleDateFormat.format(list.getCreateTime()).toString());
+            }
+            if(!list.getEnlistmentTime().toString().isEmpty()){
+                list.setEnlistmentTimes(simpleDateFormat.format(list.getEnlistmentTime()).toString());
+            }
+        }
+        return ListUser;
+    }
+
+    @Override
+    public int updateVeteranUser(VeteranUser veteranUser) {
+        return userMapper.updateVeteranUser(veteranUser);
+    }
+
+    @Override
+    public int deleteUserById(String id) {
+        return userMapper.deleteUserById(id);
+    }
+
+    /**
+     * 照片管理
+     * @param
+     * @return
+     */
+    @Override
+    public VeteranImg findVeteranImgById(Integer id) {
+        return userMapper.findVeteranImgById(id);
+    }
+
+    @Override
+    public int addVeteranImg(VeteranImg veteranImg) {
+        return userMapper.addVeteranImg(veteranImg);
+    }
+
+    @Override
+    public List<VeteranImg> selectAllVeteranImg(VeteranImg veteranImg) {
+        return userMapper.selectAllVeteranImg(veteranImg);
+    }
+
+    @Override
+    public int updateVeteranImg(VeteranImg veteranImg) {
+        return userMapper.updateVeteranImg(veteranImg);
+    }
+
+    @Override
+    public int deleteVeteranImgById(Integer id) {
+        return userMapper.deleteVeteranImgById(id);
+    }
+
+    @Override
+    public int deleteVeteranImgByUserId(Integer userId) {
+        return userMapper.deleteVeteranImgByUserId(userId);
+    }
+
 
 }

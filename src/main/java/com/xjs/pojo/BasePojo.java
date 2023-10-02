@@ -1,6 +1,8 @@
 package com.xjs.pojo;
 import lombok.Data;
 import lombok.experimental.Accessors;
+import org.springframework.format.annotation.DateTimeFormat;
+
 import java.io.Serializable;
 import java.util.Date;
 
@@ -21,6 +23,7 @@ public class BasePojo implements Serializable{
 	/**
 	 * '创建时间'
 	 */
+	@DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
 	private Date createTime;
 	/**
 	 * '修改人'
@@ -29,6 +32,11 @@ public class BasePojo implements Serializable{
 	/**
 	 * '修改时间'
 	 */
+	@DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
 	private Date modifyTime;
+	@DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+	private Date tartTime;
+	@DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+	private Date endTime;
 
 }
